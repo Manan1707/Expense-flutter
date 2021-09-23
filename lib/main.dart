@@ -1,5 +1,8 @@
 import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import './widgets/transaction_list.dart';
 import './widgets/new_transaction.dart';
 import './widgets/chart.dart';
@@ -125,9 +128,9 @@ class _MyHomePageState extends State<MyHomePage> {
           0.7,
       child: TransactionList(_userTransactions, _deleteTransaction),
     );
-    return Scaffold(
-      appBar: appBar,
-      body: SingleChildScrollView(
+
+    final pageBody = SafeArea(
+      child: SingleChildScrollView(
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -136,7 +139,10 @@ class _MyHomePageState extends State<MyHomePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text("Show chart"),
+                  Text(
+                    "Show chart",
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
                   Switch.adaptive(
                     activeColor: Theme.of(context).accentColor,
                     value: _showChart,
@@ -170,6 +176,16 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
+    );
+
+    // return Platform.isIOS
+    //     ? CupertinoPageScaffold(
+    //         child: pageBody,
+    //         navigationBar: appBar,
+    //       ):
+    return Scaffold(
+      appBar: appBar,
+      body: pageBody,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Platform.isIOS
           ? Container()
