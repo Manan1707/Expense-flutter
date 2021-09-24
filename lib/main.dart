@@ -14,29 +14,30 @@ void main() {
   //   DeviceOrientation.portraitUp,
   //   DeviceOrientation.portraitDown,
   // ]);
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Personal Expenses',
-      home: MyHomePage(),
+      home: const MyHomePage(),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.purple,
-        accentColor: Colors.amber,
+        secondaryHeaderColor: Colors.amber,
         fontFamily: "Quicksand",
         textTheme: ThemeData.light().textTheme.copyWith(
-              headline6: TextStyle(
+              headline6: const TextStyle(
                 fontFamily: "OpenSans",
                 fontWeight: FontWeight.bold,
                 fontSize: 18,
               ),
-              button: TextStyle(color: Colors.white),
+              button: const TextStyle(color: Colors.white),
             ),
-        appBarTheme: AppBarTheme(
+        appBarTheme: const AppBarTheme(
           titleTextStyle: TextStyle(
             fontFamily: "OpenSans",
             fontSize: 20,
@@ -49,6 +50,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({Key? key}) : super(key: key);
   // late String titleInput;
   // late String amountInput;
 
@@ -63,7 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return _userTransactions.where((tx) {
       return tx.date.isAfter(
         DateTime.now().subtract(
-          Duration(days: 7),
+          const Duration(days: 7),
         ),
       );
     }).toList();
@@ -111,13 +113,13 @@ class _MyHomePageState extends State<MyHomePage> {
     final mediaQuery = MediaQuery.of(context);
     final isLandScape = mediaQuery.orientation == Orientation.landscape;
     final appBar = AppBar(
-      title: Text(
+      title: const Text(
         'Personal Expenses',
       ),
       actions: <Widget>[
         IconButton(
           onPressed: () => _startAddNewTransaction(context),
-          icon: Icon(Icons.add),
+          icon: const Icon(Icons.add),
         )
       ],
     );
@@ -144,7 +146,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     style: Theme.of(context).textTheme.headline6,
                   ),
                   Switch.adaptive(
-                    activeColor: Theme.of(context).accentColor,
+                    activeColor: Theme.of(context).secondaryHeaderColor,
                     value: _showChart,
                     onChanged: (value) {
                       setState(() {
@@ -190,7 +192,7 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: Platform.isIOS
           ? Container()
           : FloatingActionButton(
-              child: Icon(Icons.add),
+              child: const Icon(Icons.add),
               onPressed: () => _startAddNewTransaction(context),
             ),
     );

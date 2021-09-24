@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import '../widgets/adaptive_flat_button.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -18,9 +16,7 @@ class NewTransaction extends StatefulWidget {
 class _NewTransactionState extends State<NewTransaction> {
   final titleController = TextEditingController();
   final amountController = TextEditingController();
-  // DateTime _selectedDate = DateTime.now();
   DateTime _selectedDate = DateTime.now();
-  DateTime? _select;
 
   void _submitData() {
     if (amountController.text.isEmpty) {
@@ -30,7 +26,7 @@ class _NewTransactionState extends State<NewTransaction> {
     final enteredTitle = titleController.text;
     final enteredAmount = double.parse(amountController.text);
 
-    if (enteredTitle.isEmpty || enteredAmount <= 0 || _selectedDate == null) {
+    if (enteredTitle.isEmpty || enteredAmount <= 0) {
       return;
     }
 
@@ -75,7 +71,7 @@ class _NewTransactionState extends State<NewTransaction> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
               TextField(
-                decoration: InputDecoration(labelText: "Title"),
+                decoration: const InputDecoration(labelText: "Title"),
                 // onChanged: (val) {
                 //   titleInput = val;
                 // },
@@ -83,7 +79,7 @@ class _NewTransactionState extends State<NewTransaction> {
                 onSubmitted: (_) => _submitData(),
               ),
               TextField(
-                decoration: InputDecoration(labelText: "Amount"),
+                decoration: const InputDecoration(labelText: "Amount"),
                 // onChanged: (val) => amountInput = val,
                 controller: amountController,
                 keyboardType: TextInputType.number,
@@ -95,21 +91,23 @@ class _NewTransactionState extends State<NewTransaction> {
                   children: <Widget>[
                     Expanded(
                       child: Text(
-                        _selectedDate == null
-                            ? "No date Choosen!"
-                            : "Date: ${DateFormat.yMd().format(_selectedDate)}",
+                        "Date: ${DateFormat.yMd().format(_selectedDate)}",
                       ),
                     ),
                     AdaptiveFlatButton("Choose Date", _presentDatePicker),
                   ],
                 ),
               ),
-              RaisedButton(
+              ElevatedButton(
                 onPressed: _submitData,
-                child: Text("Add Transaction"),
-                color: Theme.of(context).primaryColor,
-                textColor:
-                    Colors.white, //Theme.of(context).textTheme.button.color,
+                child: const Text("Add Transaction"),
+                // color: Theme.of(context).primaryColor,
+                // textColor:
+                //     Colors.white, //Theme.of(context).textTheme.button.color,
+                style: ElevatedButton.styleFrom(
+                  primary: Theme.of(context).primaryColor,
+                  textStyle: const TextStyle(color: Colors.white),
+                ),
               )
             ],
           ),
